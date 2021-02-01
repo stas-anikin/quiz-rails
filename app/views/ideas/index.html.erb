@@ -1,0 +1,40 @@
+<h1 class="text-center mt-4">All Ideas</h1>
+<div class="container">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 justify-content-md-center">
+  <% @ideas.each do |idea| %>
+    <div class="col-8 mt-4">
+      <div class="card text-center shadow mb-5 bg-white rounded">
+                 <div class="card-header">
+                    Idea by: <%= idea.user&.full_name || "Deleted" %>
+                </div>
+        <div class="card-body">
+                <h5 class="card-title">
+                  <%= link_to(idea.title, idea_path(idea.id)) %>
+</h5>
+          <p class="card-text"><%= idea.description %></p>
+                  <p class="card-text"><%= idea.likes.count %> likes</p>                                          
+   <% like = idea.likes.find_by(user: current_user) %>
+        <% if like.present? && can?(:destroy, like) %>
+            <%= link_to(
+                  "Liked",
+                  like_path(like),
+                  class: "btn btn-outline-danger",
+                  method: :delete,
+                ) %> 
+        <% elsif can?(:like, idea) %>
+            <%= link_to(
+                  "Like",
+                  idea_likes_path(idea),
+                  class: "btn btn-outline-info",
+                  method: :post,
+                ) %> 
+        <% end %>
+        <div class="card-footer text-muted mt-3">
+                    <small>Posted <%= time_ago_in_words(idea.created_at) %> ago</small>
+                </div>
+      </div>
+      </div>
+    </div>
+  <% end %>
+   </div>
+</div>
