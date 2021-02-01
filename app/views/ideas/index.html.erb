@@ -18,16 +18,18 @@
             <%= link_to(
                   "Liked",
                   like_path(like),
+                  class: "btn btn-outline-danger",
                   method: :delete,
                 ) %> 
         <% elsif can?(:like, idea) %>
             <%= link_to(
                   "Like",
                   idea_likes_path(idea),
+                  class: "btn btn-outline-info",
                   method: :post,
                 ) %> 
         <% end %>
-        <div class="card-footer text-muted">
+        <div class="card-footer text-muted mt-3">
                     <small>Posted <%= time_ago_in_words(idea.created_at) %> ago</small>
                 </div>
       </div>

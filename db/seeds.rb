@@ -29,8 +29,8 @@ end
 users = User.all
 50.times do
   i = Idea.create(
-    title: Faker::Commerce.product_name,
-    description: Faker::Hipster.sentence,
+    title: Faker::Hipster.sentence,
+    description: Faker::Hipster.paragraph,
     user: users.sample,
   )
   if i.valid?

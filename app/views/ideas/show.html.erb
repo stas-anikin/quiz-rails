@@ -21,7 +21,7 @@
                         <%= link_to "Delete", idea_path(@idea), class: "btn btn-outline-danger", method: :delete, data: { confirm: "Are you sure?" } %>
                         <%= link_to "Edit", edit_idea_path(@idea), class: "btn btn-outline-info" %>
                         <% end %>
-                     
+                
                     <div class="card-footer mt-2 text-muted">
                         <small>posted    <%= time_ago_in_words(@idea.created_at) %> ago</small>
                     </div>

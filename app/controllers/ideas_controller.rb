@@ -1,6 +1,6 @@
 class IdeasController < ApplicationController
   before_action :find_idea, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_user!, only: [:edit, :update, :destroy]
+  before_action :authenticate_user!, except: [:index, :show]
 
   def index
     @ideas = Idea.order(created_at: :desc)
@@ -41,7 +41,7 @@ class IdeasController < ApplicationController
 
   def destroy
     @idea.destroy
-    redirect_to ideas_path, alert: "idea deleted"
+    redirect_to ideas_path, alert: "Idea deleted"
   end
 
   private
