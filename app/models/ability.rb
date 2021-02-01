@@ -36,7 +36,7 @@ class Ability
       like.user == user
     end
     can :like, Idea do |idea|
-      user = user.valid?
+      user.persisted?
     end
   end
 end

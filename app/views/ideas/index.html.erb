@@ -12,7 +12,21 @@
                   <%= link_to(idea.title, idea_path(idea.id)) %>
 </h5>
           <p class="card-text"><%= idea.description %></p>
-        
+                  <p class="card-text"><%= idea.likes.count %> likes</p>                                          
+   <% like = idea.likes.find_by(user: current_user) %>
+        <% if like.present? && can?(:destroy, like) %>
+            <%= link_to(
+                  "Liked",
+                  like_path(like),
+                  method: :delete,
+                ) %> 
+        <% elsif can?(:like, idea) %>
+            <%= link_to(
+                  "Like",
+                  idea_likes_path(idea),
+                  method: :post,
+                ) %> 
+        <% end %>
         <div class="card-footer text-muted">
                     <small>Posted <%= time_ago_in_words(idea.created_at) %> ago</small>
                 </div>
