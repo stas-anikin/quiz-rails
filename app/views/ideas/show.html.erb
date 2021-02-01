@@ -1,0 +1,51 @@
+<div class="container">
+    <div class="row justify-content-md-center">
+        <div class="col-8 mt-4">
+            <div class="card text-center shadow mb-7 bg-white rounded">
+                <div class="card-header">
+                    Idea by: <%= @idea.user&.full_name || "Deleted" %>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <%= @idea.title %>
+                    </h5>
+                    <p class="card-text">
+                        <%= @idea.description %>
+                    </p> 
+                        <% if can? :crud, @idea %>
+                        <%= link_to "Delete", idea_path(@idea), class: "btn btn-outline-danger", method: :delete, data: { confirm: "Are you sure?" } %>
+                        <%= link_to "Edit", edit_idea_path(@idea), class: "btn btn-outline-info" %>
+                        <% end %>
+                    <div class="card-footer mt-2 text-muted">
+                        <small>ideaed <%= time_ago_in_words(@idea.created_at) %> ago</small>
+                    </div>
+                </div>
+            </div>    
+                <div class="card text-center shadow mt-4 mb-5 bg-white rounded">
+                    <div class="card-header">
+Post a review
+                    </div>
+                        <%= form_with model: [@idea, @review], class: "shadow p-3 mb-3 bg-info rounded", local: true do |f| %>
+                        <%= render "shared/errors", obj: @review %>
+                    <div class='shadow-sm p-3 mb-5 round'>
+                        <%= f.text_area :body,
+                                        cols: 50,
+                                        rows: 5,
+                                        placeholder: "What do you think?" %>
+                    </div>
+                       <%= f.submit class: "btn btn-primary" %>
+                        <% end %>
+                </div>        
+                    <h3 class= "text-center">reviews</h3>
+                        <% @reviews.each do |review| %>
+            <div class="card text-center shadow mt-4 mb-5 bg-white rounded">
+                    <h5 class="card-title">reviewed <%= time_ago_in_words(review.created_at) %> ago by <%= review.user.full_name %></h5>
+                    <p class="card-text"><%= review.body %></p>
+                        <% if can? :crud, review %>
+                        <%= link_to "Delete", review_path(@idea, review), method: :delete, data: { confirm: "Are you sure?" } %>
+                        <% end %>                
+            </div>
+                <% end %>        
+        </div>
+    </div>
+</div>
